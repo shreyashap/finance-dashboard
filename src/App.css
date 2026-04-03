@@ -1,16 +1,8 @@
-:root {
-  font-family: Inter, 'Segoe UI', sans-serif;
-}
-
 body {
   margin: 0;
-  background: #f3f4f6;
-  color: #111827;
-}
-
-.dark body {
-  background: #030712;
-  color: #f3f4f6;
+  font-family: var(--font-body);
+  background: var(--bg-page);
+  color: var(--text-primary);
 }
 
 * {
@@ -35,6 +27,8 @@ body {
 
 .topbar h1 {
   margin: 0;
+  font-family: var(--font-headline);
+  letter-spacing: -0.01em;
 }
 
 .controls {
@@ -51,18 +45,17 @@ body {
 
 .controls select,
 .controls button {
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--control-border);
   border-radius: 0.5rem;
   padding: 0.5rem 0.75rem;
   font: inherit;
-  background: #fff;
+  color: var(--text-primary);
+  background: var(--control-bg);
+  transition: border-color 120ms ease, box-shadow 120ms ease;
 }
 
-.dark .controls select,
-.dark .controls button {
-  background: #111827;
-  border-color: #374151;
-  color: #f3f4f6;
+.controls button {
+  cursor: pointer;
 }
 
 .content {
@@ -72,17 +65,25 @@ body {
 }
 
 .panel {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-default);
   border-radius: 0.75rem;
-  background: #fff;
+  background: var(--bg-surface);
   padding: 1rem;
-}
-
-.dark .panel {
-  background: #111827;
-  border-color: #374151;
 }
 
 .panel h2 {
   margin-top: 0;
+  font-family: var(--font-headline);
+  font-weight: 700;
+}
+
+.panel p {
+  color: var(--text-secondary);
+}
+
+.controls select:focus-visible,
+.controls button:focus-visible {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 28%, transparent);
 }
