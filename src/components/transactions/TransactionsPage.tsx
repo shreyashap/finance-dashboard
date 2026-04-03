@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTransactionContext } from '../../context/TransactionContext'
 import { formatCurrency } from '../../utils/formatters'
@@ -390,17 +390,25 @@ export function TransactionsPage() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [activeFilter, setActiveFilter] = useState<'all' | TransactionType>('all')
   const [searchQuery, setSearchQuery] = useState('')
+  const [debouncedQuery, setDebouncedQuery] = useState('')
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(searchQuery)
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [searchQuery])
 
   const filteredTransactions = useMemo(() => {
     return state.transactions
       .filter(tx => {
         if (activeFilter !== 'all' && tx.type !== activeFilter) return false
-        if (searchQuery && !tx.description.toLowerCase().includes(searchQuery.toLowerCase()) && 
-            !tx.category.toLowerCase().includes(searchQuery.toLowerCase())) return false
+        if (debouncedQuery && !tx.description.toLowerCase().includes(debouncedQuery.toLowerCase()) && 
+            !tx.category.toLowerCase().includes(debouncedQuery.toLowerCase())) return false
         return true
       })
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  }, [state.transactions, activeFilter, searchQuery])
+  }, [state.transactions, activeFilter, debouncedQuery])
 
   const handleAddTransaction = (data: TransactionFormData) => {
     if (!data.category) return
@@ -426,7 +434,7 @@ export function TransactionsPage() {
   }
 
   return (
-    <main className="mx-auto max-w-7xl px-5 py-6 md:px-8 md:py-8 space-y-6">
+    <main className="mx-auto max-w-7xl px-5 py-6 md:px-8 md:py-8 space-y-6 pb-32 md:pb-8">
       <AddTransactionModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -445,14 +453,14 @@ export function TransactionsPage() {
           <p className="text-[var(--text-secondary)] text-sm mt-1">Manage your financial records</p>
         </div>
         
-        <div className="relative hidden lg:block">
+        <div className="relative">
           <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]">search</span>
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by description..."
-            className="pl-10 pr-4 py-2 bg-[var(--bg-surface-2)] border-none rounded-xl text-sm w-80 focus:ring-2 focus:ring-[var(--color-primary)]"
+            className="pl-10 pr-4 py-2 bg-[var(--bg-surface-2)] border-none rounded-xl text-sm w-full md:w-80 focus:ring-2 focus:ring-[var(--color-primary)]"
           />
         </div>
       </div>
@@ -572,7 +580,7 @@ export function TransactionsPage() {
         onClick={openAddForm}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-28 right-6 w-16 h-16 bg-[var(--color-primary)] text-white rounded-2xl flex items-center justify-center shadow-2xl shadow-[var(--color-primary)]/40 z-40 md:bottom-8"
+        className="fixed bottom-28 right-6 w-16 h-16 bg-[var(--color-primary)] text-white rounded-2xl flex items-center justify-center shadow-2xl shadow-[var(--color-primary)]/40 z-40 md:bottom-8 pb-24 md:pb-0"
       >
         <span className="material-symbols-outlined text-3xl">add</span>
       </motion.button>
