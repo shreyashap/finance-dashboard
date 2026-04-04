@@ -276,8 +276,8 @@ function InsightsPage() {
           </div>
         </div>
 
-        <div className="md:col-span-12 flex justify-center">
-          <div className="bg-[var(--color-tertiary)] text-white px-6 py-4 rounded-2xl flex items-center gap-4 shadow-sm border border-[var(--color-tertiary)]/20 max-w-2xl">
+        <div className="md:col-span-12 mt-8">
+          <div className="bg-[var(--color-tertiary)] text-white px-6 py-4 rounded-2xl flex items-center gap-4 shadow-sm border border-[var(--color-tertiary)]/20 w-full">
             <div className="w-10 h-10 bg-white/50 rounded-full flex items-center justify-center text-[var(--color-tertiary)]">
               <span className="material-symbols-outlined" style={{ fontVariationSettings: 'FILL 1' }}>auto_awesome</span>
             </div>

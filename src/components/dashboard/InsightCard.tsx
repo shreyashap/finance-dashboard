@@ -65,7 +65,7 @@ export function InsightCard() {
         initial="hidden"
         animate="visible"
         variants={cardVariants}
-        className="max-w-3xl"
+        className="w-full"
       >
         <motion.div 
           className="rounded-2xl bg-[var(--color-tertiary)]/10 border border-[var(--color-tertiary)]/20 p-4 flex items-start gap-3 shadow-[0_20px_40px_rgba(79,70,229,0.06)]"
@@ -93,7 +93,7 @@ export function InsightCard() {
       initial="hidden"
       animate="visible"
       variants={cardVariants}
-      className="max-w-3xl"
+      className="w-full"
     >
       <motion.div 
         className="rounded-2xl bg-[var(--color-tertiary)]/10 border border-[var(--color-tertiary)]/20 p-4 flex items-start gap-3 shadow-[0_20px_40px_rgba(79,70,229,0.06)] cursor-pointer"
