@@ -12,11 +12,10 @@ export function BottomNav({ role: _role, onRoleChange: _onRoleChange, currentPag
     { icon: 'home', label: 'Home', page: 'dashboard' as const },
     { icon: 'account_balance_wallet', label: 'Activity', page: 'transactions' as const },
     { icon: 'query_stats', label: 'Analysis', page: 'insights' as const },
-    { icon: 'menu', label: 'Menu', page: 'dashboard' as const },
   ]
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 grid grid-cols-4 gap-1 border-t border-[var(--border-default)] bg-[var(--bg-surface)]/90 px-2 pb-[1.4rem] pt-2 backdrop-blur-xl shadow-[0_-10px_28px_var(--color-primary)/10] md:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 grid grid-cols-3 gap-1 border-t border-[var(--border-default)] bg-[var(--bg-surface)]/90 px-2 pb-[1.4rem] pt-2 backdrop-blur-xl shadow-[0_-10px_28px_var(--color-primary)/10] md:hidden">
       {bottomNavItems.map((item) => (
         <button
           key={item.label}

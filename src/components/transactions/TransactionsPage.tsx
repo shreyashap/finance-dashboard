@@ -85,6 +85,7 @@ export function TransactionsPage() {
         onSearchChange={setSearchQuery}
         activeFilter={activeFilter}
         onFilterChange={setActiveFilter}
+        transactions={filteredTransactions}
       />
 
       <TransactionTable transactions={filteredTransactions} />

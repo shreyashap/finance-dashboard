@@ -5,6 +5,7 @@ import type { Transaction } from '../../types'
 
 interface RecentActivityProps {
   transactions: Transaction[]
+  onViewAll?: () => void
 }
 
 const cardVariants = {
@@ -23,7 +24,7 @@ function getCategoryIcon(tx: Transaction) {
   return 'receipt'
 }
 
-export function RecentActivity({ transactions }: RecentActivityProps) {
+export function RecentActivity({ transactions, onViewAll }: RecentActivityProps) {
   const recentTransactions = useMemo(() => {
     return [...transactions]
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
@@ -44,6 +45,7 @@ export function RecentActivity({ transactions }: RecentActivityProps) {
           className="text-[var(--color-primary)] text-xs font-bold uppercase tracking-wide hover:underline"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          onClick={onViewAll}
         >
           View all
         </motion.button>

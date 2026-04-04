@@ -31,7 +31,7 @@ function App() {
       />
       
       <div className="md:ml-64">
-        {currentPage === 'dashboard' && <Dashboard />}
+        {currentPage === 'dashboard' && <Dashboard onNavigateToTransactions={() => setCurrentPage('transactions')} />}
         {currentPage === 'transactions' && <TransactionsPage />}
         {currentPage === 'insights' && <InsightsPage />}
       </div>

@@ -9,7 +9,11 @@ const spendingCategories = [
   { name: 'Other', percent: 20, color: '#9ca3af' }
 ]
 
-export function Dashboard() {
+interface DashboardProps {
+  onNavigateToTransactions?: () => void
+}
+
+export function Dashboard({ onNavigateToTransactions }: DashboardProps) {
   const { state } = useTransactionContext()
   const transactions = state.transactions
 
@@ -34,7 +38,7 @@ export function Dashboard() {
         
         <QuickActions />
         
-        <RecentActivity transactions={transactions} />
+        <RecentActivity transactions={transactions} onViewAll={onNavigateToTransactions} />
       </section>
 
       <InsightCard />
