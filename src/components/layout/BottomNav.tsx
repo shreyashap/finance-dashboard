@@ -4,14 +4,14 @@ interface BottomNavProps {
   role: Role
   onRoleChange: (role: Role) => void
   currentPage?: string
-  onNavigate?: (page: 'dashboard' | 'transactions') => void
+  onNavigate?: (page: 'dashboard' | 'transactions' | 'insights') => void
 }
 
 export function BottomNav({ role: _role, onRoleChange: _onRoleChange, currentPage, onNavigate }: BottomNavProps) {
   const bottomNavItems = [
     { icon: 'home', label: 'Home', page: 'dashboard' as const },
     { icon: 'account_balance_wallet', label: 'Activity', page: 'transactions' as const },
-    { icon: 'query_stats', label: 'Analysis', page: 'dashboard' as const },
+    { icon: 'query_stats', label: 'Analysis', page: 'insights' as const },
     { icon: 'menu', label: 'Menu', page: 'dashboard' as const },
   ]
 
@@ -20,7 +20,7 @@ export function BottomNav({ role: _role, onRoleChange: _onRoleChange, currentPag
       {bottomNavItems.map((item) => (
         <button
           key={item.label}
-          onClick={() => item.page === 'dashboard' || item.page === 'transactions' ? onNavigate?.(item.page) : undefined}
+          onClick={() => item.page === 'dashboard' || item.page === 'transactions' || item.page === 'insights' ? onNavigate?.(item.page) : undefined}
           className={`flex flex-col items-center justify-center gap-1 rounded-2xl px-2 py-2 transition-all hover:-translate-y-1 ${item.page === currentPage ? 'bg-[var(--color-primary)]/10 text-[var(--color-primary)]' : 'text-[var(--text-secondary)] hover:bg-[var(--bg-surface-2)]'}`}
         >
           <span className="material-symbols-outlined text-xl">{item.icon}</span>
