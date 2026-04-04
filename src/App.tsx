@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { BottomNav } from './components/layout/BottomNav'
 import { TopNav } from './components/layout/TopNav'
+import { SideNav } from './components/layout/SideNav'
 import { Dashboard } from './components/dashboard/Dashboard'
 import { TransactionsPage } from './components/transactions'
 import { InsightsPage } from './components/insights'
@@ -21,13 +22,19 @@ function App() {
         isDark={isDark} 
         onRoleChange={setRole} 
         onToggleTheme={toggleTheme}
+      />
+      
+      <SideNav 
+        role={role}
         currentPage={currentPage}
         onNavigate={setCurrentPage}
       />
       
-      {currentPage === 'dashboard' && <Dashboard />}
-      {currentPage === 'transactions' && <TransactionsPage />}
-      {currentPage === 'insights' && <InsightsPage />}
+      <div className="md:ml-64">
+        {currentPage === 'dashboard' && <Dashboard />}
+        {currentPage === 'transactions' && <TransactionsPage />}
+        {currentPage === 'insights' && <InsightsPage />}
+      </div>
       
       <BottomNav 
         role={role} 

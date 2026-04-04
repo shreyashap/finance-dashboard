@@ -6,11 +6,9 @@ interface TopNavProps {
   isDark: boolean
   onRoleChange: (role: Role) => void
   onToggleTheme: () => void
-  currentPage?: string
-  onNavigate?: (page: 'dashboard' | 'transactions' | 'insights') => void
 }
 
-export function TopNav({ role, isDark, onRoleChange, onToggleTheme, currentPage, onNavigate }: TopNavProps) {
+export function TopNav({ role, isDark, onRoleChange, onToggleTheme }: TopNavProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -31,39 +29,10 @@ export function TopNav({ role, isDark, onRoleChange, onToggleTheme, currentPage,
 
   const currentRole = roles.find((r) => r.value === role)
 
-  const handleNavClick = (page: 'dashboard' | 'transactions' | 'insights') => {
-    if (onNavigate) {
-      onNavigate(page)
-    }
-  }
-
   return (
     <header className="sticky top-0 z-40 flex items-center justify-between gap-4 border-b border-[var(--border-default)] bg-[var(--bg-surface)] px-5 py-3 backdrop-blur-md max-md:animate-slide-down">
       <div className="flex items-center gap-7">
         <span className="font-headline text-2xl font-extrabold tracking-tight text-[var(--color-primary)]">FinanceIQ</span>
-        <nav className="hidden items-center gap-5 md:flex">
-          <button 
-            onClick={() => handleNavClick('dashboard')}
-            className={`relative text-sm font-bold transition-colors hover:text-[var(--color-primary)] ${currentPage === 'dashboard' ? 'text-[var(--color-primary)]' : 'text-[var(--text-secondary)]'}`}
-          >
-            Dashboard
-            {currentPage === 'dashboard' && <span className="absolute -bottom-2 left-0 h-0.5 w-full rounded-full bg-[var(--color-primary)]" />}
-          </button>
-          <button 
-            onClick={() => handleNavClick('transactions')}
-            className={`relative text-sm font-bold transition-colors hover:-translate-y-0.5 hover:text-[var(--color-primary)] ${currentPage === 'transactions' ? 'text-[var(--color-primary)]' : 'text-[var(--text-secondary)]'}`}
-          >
-            Transactions
-            {currentPage === 'transactions' && <span className="absolute -bottom-2 left-0 h-0.5 w-full rounded-full bg-[var(--color-primary)]" />}
-          </button>
-          <button 
-            onClick={() => handleNavClick('insights')}
-            className={`relative text-sm font-bold transition-colors hover:-translate-y-0.5 hover:text-[var(--color-primary)] ${currentPage === 'insights' ? 'text-[var(--color-primary)]' : 'text-[var(--text-secondary)]'}`}
-          >
-            Insights
-            {currentPage === 'insights' && <span className="absolute -bottom-2 left-0 h-0.5 w-full rounded-full bg-[var(--color-primary)]" />}
-          </button>
-        </nav>
       </div>
 
       <div className="flex items-center gap-2">
