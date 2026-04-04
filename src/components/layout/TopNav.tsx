@@ -7,7 +7,7 @@ interface TopNavProps {
   onRoleChange: (role: Role) => void
   onToggleTheme: () => void
   currentPage?: string
-  onNavigate?: (page: 'dashboard' | 'transactions') => void
+  onNavigate?: (page: 'dashboard' | 'transactions' | 'insights') => void
 }
 
 export function TopNav({ role, isDark, onRoleChange, onToggleTheme, currentPage, onNavigate }: TopNavProps) {
@@ -31,7 +31,7 @@ export function TopNav({ role, isDark, onRoleChange, onToggleTheme, currentPage,
 
   const currentRole = roles.find((r) => r.value === role)
 
-  const handleNavClick = (page: 'dashboard' | 'transactions') => {
+  const handleNavClick = (page: 'dashboard' | 'transactions' | 'insights') => {
     if (onNavigate) {
       onNavigate(page)
     }
@@ -56,8 +56,12 @@ export function TopNav({ role, isDark, onRoleChange, onToggleTheme, currentPage,
             Transactions
             {currentPage === 'transactions' && <span className="absolute -bottom-2 left-0 h-0.5 w-full rounded-full bg-[var(--color-primary)]" />}
           </button>
-          <button className="relative text-sm font-bold text-[var(--text-secondary)] transition-colors hover:-translate-y-0.5 hover:text-[var(--color-primary)]">
+          <button 
+            onClick={() => handleNavClick('insights')}
+            className={`relative text-sm font-bold transition-colors hover:-translate-y-0.5 hover:text-[var(--color-primary)] ${currentPage === 'insights' ? 'text-[var(--color-primary)]' : 'text-[var(--text-secondary)]'}`}
+          >
             Insights
+            {currentPage === 'insights' && <span className="absolute -bottom-2 left-0 h-0.5 w-full rounded-full bg-[var(--color-primary)]" />}
           </button>
         </nav>
       </div>
