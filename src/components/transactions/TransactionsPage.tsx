@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useTransactionContext } from '../../context/TransactionContext'
+import { usePermissions } from '../../hooks/usePermissions'
 import { TransactionFilters } from './TransactionFilters'
 import { TransactionTable } from './TransactionTable'
 import { AddTransactionModal } from './AddTransactionModal'
@@ -17,6 +18,7 @@ interface TransactionFormData {
 
 export function TransactionsPage() {
   const { state, dispatch } = useTransactionContext()
+  const { canAdd } = usePermissions()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [activeFilter, setActiveFilter] = useState<'all' | TransactionType>('all')
@@ -88,20 +90,42 @@ export function TransactionsPage() {
       <TransactionTable transactions={filteredTransactions} />
 
       <div className="md:hidden space-y-6">
-        {filteredTransactions.slice(0, 10).map((tx, i) => (
-          <MobileTransactionItem key={tx.id} tx={tx} index={i} />
-        ))}
+        {filteredTransactions.length === 0 ? (
+          <EmptyState />
+        ) : (
+          filteredTransactions.slice(0, 10).map((tx, i) => (
+            <MobileTransactionItem key={tx.id} tx={tx} index={i} />
+          ))
+        )}
       </div>
 
-      <motion.button
-        onClick={openAddForm}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="fixed bottom-28 right-6 w-16 h-16 bg-[var(--color-primary)] text-white rounded-2xl flex items-center justify-center shadow-2xl shadow-[var(--color-primary)]/40 z-40 md:bottom-8 md:pb-0"
-      >
-        <span className="material-symbols-outlined text-3xl">add</span>
-      </motion.button>
+      {canAdd && (
+        <motion.button
+          onClick={openAddForm}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="fixed bottom-28 right-6 w-16 h-16 bg-[var(--color-primary)] text-white rounded-2xl flex items-center justify-center shadow-2xl shadow-[var(--color-primary)]/40 z-40 md:bottom-8 md:pb-0"
+        >
+          <span className="material-symbols-outlined text-3xl">add</span>
+        </motion.button>
+      )}
     </main>
+  )
+}
+
+function EmptyState() {
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="bg-[var(--bg-surface)] rounded-2xl p-8 text-center"
+    >
+      <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[var(--bg-surface-2)] flex items-center justify-center">
+        <span className="material-symbols-outlined text-3xl text-[var(--text-secondary)]">receipt_long</span>
+      </div>
+      <h3 className="text-lg font-bold text-[var(--text-primary)]">No transactions yet</h3>
+      <p className="text-sm text-[var(--text-secondary)] mt-1">Add your first transaction to get started</p>
+    </motion.div>
   )
 }
 

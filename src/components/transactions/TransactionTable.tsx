@@ -23,6 +23,18 @@ interface TransactionTableProps {
 }
 
 export function TransactionTable({ transactions }: TransactionTableProps) {
+  if (transactions.length === 0) {
+    return (
+      <div className="hidden md:block bg-[var(--bg-surface)] rounded-3xl p-12 text-center shadow-[0_20px_40px_rgba(79,70,229,0.06)]">
+        <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-[var(--bg-surface-2)] flex items-center justify-center">
+          <span className="material-symbols-outlined text-4xl text-[var(--text-secondary)]">receipt_long</span>
+        </div>
+        <h3 className="text-xl font-bold text-[var(--text-primary)]">No transactions found</h3>
+        <p className="text-sm text-[var(--text-secondary)] mt-2">Try adjusting your filters or add a new transaction</p>
+      </div>
+    )
+  }
+
   return (
     <div className="hidden md:block bg-[var(--bg-surface)] rounded-3xl overflow-hidden shadow-[0_20px_40px_rgba(79,70,229,0.06)]">
       <table className="w-full text-left">
